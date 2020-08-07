@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Movie.Core.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace DemoProje.Entities.Models
 {
-    public partial class MaintenanceHistory
+    public partial class MaintenanceHistory : IEntity
     {
         public int Id { get; set; }
         public int MaintenanceId { get; set; }

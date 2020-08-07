@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Movie.Core.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace DemoProje.Entities.Models
 {
-    public partial class ActionType
+    public partial class ActionType : IEntity
     {
         public ActionType()
         {

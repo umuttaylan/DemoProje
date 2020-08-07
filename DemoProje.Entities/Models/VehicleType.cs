@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Movie.Core.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace DemoProje.Entities.Models
 {
-    public partial class VehicleType
+    public partial class VehicleType : IEntity
     {
         public VehicleType()
         {

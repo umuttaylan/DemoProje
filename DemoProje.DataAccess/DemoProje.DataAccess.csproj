@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\DemoProje.Core\DemoProje.Core.csproj" />
     <ProjectReference Include="..\DemoProje.Entities\DemoProje.Entities.csproj" />
   </ItemGroup>
 
