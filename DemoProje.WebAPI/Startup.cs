@@ -40,11 +40,16 @@ namespace DemoProje.WebAPI
             #endregion
 
             #region DbContext
-
             services.AddTransient<DbContext, DemoProjeDbContext>();
             services.AddScoped(typeof(IEntityRepository<>), typeof(efRepositoryBase<>));
+            #endregion
+
+            #region DAL
+            services.AddTransient<IActionTypeDal, efActionTypeDal>();
+            services.AddTransient<IMaintenanceDal, efMaintenanceDal>();
 
             #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
