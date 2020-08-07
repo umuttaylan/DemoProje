@@ -1,16 +1,17 @@
 ﻿using System;
+using DemoProje.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DemoProje.Entities.Models
+namespace DemoProje.DataAccess.Concrete.EntityFramework
 {
-    public partial class testcasedb26Context : DbContext
+    public partial class DemoProjeDbContext : DbContext
     {
-        public testcasedb26Context()
+        public DemoProjeDbContext()
         {
         }
 
-        public testcasedb26Context(DbContextOptions<testcasedb26Context> options)
+        public DemoProjeDbContext(DbContextOptions<DemoProjeDbContext> options)
             : base(options)
         {
         }
@@ -23,16 +24,7 @@ namespace DemoProje.Entities.Models
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Vehicle> Vehicle { get; set; }
         public virtual DbSet<VehicleType> VehicleType { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseNpgsql("Host=212.237.5.27;Database=testcasedb26;Username=testcase26;Password=tCXKhe4L");
-            }
-        }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ActionType>(entity =>
