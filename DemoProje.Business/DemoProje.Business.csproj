@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DemoProje.DataAccess\DemoProje.DataAccess.csproj" />
     <ProjectReference Include="..\DemoProje.Entities\DemoProje.Entities.csproj" />
   </ItemGroup>
