@@ -1,7 +1,5 @@
-﻿using System;
-using DemoProje.Entities.Models;
+﻿using DemoProje.Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DemoProje.DataAccess.Concrete.EntityFramework
 {

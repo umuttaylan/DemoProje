@@ -1,4 +1,4 @@
-﻿using Movie.Core.Entities;
+﻿using DemoProje.Core.Entities;
 using System;
 using System.Collections.Generic;
 

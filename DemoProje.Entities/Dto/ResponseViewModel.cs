@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movie.Entities.Dto
+namespace DemoProje.Entities.Dto
 {
     [Serializable]
     public class ResponseViewModel

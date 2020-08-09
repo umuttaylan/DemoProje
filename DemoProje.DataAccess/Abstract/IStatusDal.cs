@@ -1,5 +1,5 @@
 ﻿using DemoProje.Entities.Models;
-using Movie.Core.DataAccess;
+using DemoProje.Core.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Text;

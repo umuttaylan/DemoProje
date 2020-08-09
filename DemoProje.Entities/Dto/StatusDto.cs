@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DemoProje.Core.Entities
+namespace DemoProje.Entities.Dto
 {
-    public interface IEntity
+    public class StatusDto
     {
     }
 }

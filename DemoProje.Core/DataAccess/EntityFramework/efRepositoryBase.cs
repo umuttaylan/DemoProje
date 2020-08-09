@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Movie.Core.Entities;
+﻿using DemoProje.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Movie.Core.DataAccess.EntityFramework
+namespace DemoProje.Core.DataAccess.EntityFramework
 {
     public class efRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
@@ -60,7 +60,7 @@ namespace Movie.Core.DataAccess.EntityFramework
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
