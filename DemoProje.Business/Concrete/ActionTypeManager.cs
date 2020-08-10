@@ -21,12 +21,12 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var user = _userDal.Get(x => x.Id == actionTypeDto.CreatedBy);
+            var user = IsUserHave(actionTypeDto.CreatedBy);
 
-            if (user == null)
+            if (!user)
             {
                 response.IsSuccess = false;
-                response.Message = "Kayıt eden User bulunamadı";
+                response.Message = "User bulunamadı";
 
                 return response;
             }
@@ -111,6 +111,16 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
+            var user = IsUserHave(actionTypeDto.CreatedBy);
+
+            if (!user)
+            {
+                response.IsSuccess = false;
+                response.Message = "User bulunamadı";
+
+                return response;
+            }
+
             var actionType = new ActionType()
             {
                 Id = actionTypeDto.Id,
@@ -130,6 +140,14 @@ namespace DemoProje.Business.Concrete
             }
 
             return response;
+        }
+
+        private bool IsUserHave(int userID)
+        {
+            var user = _userDal.Get(x => x.Id == actionTypeDto.CreatedBy);
+
+            if (user == null) return false;
+            else return true;
         }
     }
 }
