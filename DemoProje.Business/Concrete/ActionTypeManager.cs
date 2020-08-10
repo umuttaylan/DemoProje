@@ -20,15 +20,17 @@ namespace DemoProje.Business.Concrete
         public ResponseViewModel Add(ActionTypeDto actionTypeDto)
         {
             var response = new ResponseViewModel();
-
-            var user = IsUserHave(actionTypeDto.CreatedBy);
-
-            if (!user)
+            if (actionTypeDto.CreatedBy != null)
             {
-                response.IsSuccess = false;
-                response.Message = "User bulunamadı";
+                var user = IsUserHave((int)actionTypeDto.CreatedBy);
 
-                return response;
+                if (!user)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "User bulunamadı";
+
+                    return response;
+                }
             }
 
             var actionType = new ActionType()
@@ -38,7 +40,7 @@ namespace DemoProje.Business.Concrete
                 CreatedBy = actionTypeDto.CreatedBy,
             };
             _actionTypeDal.Add(actionType);
-            
+
 
             var saving = _actionTypeDal.SaveChanges();
             if (!saving)
@@ -64,7 +66,9 @@ namespace DemoProje.Business.Concrete
                 return response;
             }
 
-            _actionTypeDal.Delete(actionType);
+            actionType.IsDeleted = true;
+
+            _actionTypeDal.Update(actionType);
             var saving = _actionTypeDal.SaveChanges();
             if (!saving)
             {
@@ -94,12 +98,12 @@ namespace DemoProje.Business.Concrete
 
             var actionTypeDto = new ActionTypeDto()
             {
-               Name = actionType.Name,
-               CreateDate = actionType.CreateDate,
-               CreatedBy = actionType.CreatedBy,
-               ModifyDate = actionType.ModifyDate,
-               ModifiedBy = actionType.ModifiedBy,
-               IsDeleted = actionType.IsDeleted
+                Name = actionType.Name,
+                CreateDate = actionType.CreateDate,
+                CreatedBy = actionType.CreatedBy,
+                ModifyDate = actionType.ModifyDate,
+                ModifiedBy = actionType.ModifiedBy,
+                IsDeleted = actionType.IsDeleted
             };
 
             response.Data = actionTypeDto;
@@ -111,14 +115,30 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var user = IsUserHave(actionTypeDto.CreatedBy);
-
-            if (!user)
+            if (actionTypeDto.CreatedBy != null)
             {
-                response.IsSuccess = false;
-                response.Message = "User bulunamadı";
+                var user = IsUserHave((int)actionTypeDto.CreatedBy);
 
-                return response;
+                if (!user)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "User bulunamadı";
+
+                    return response;
+                }
+            }
+
+            if (actionTypeDto.ModifiedBy != null)
+            {
+                var user = IsUserHave((int)actionTypeDto.ModifiedBy);
+
+                if (!user)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "User bulunamadı";
+
+                    return response;
+                }
             }
 
             var actionType = new ActionType()
@@ -144,7 +164,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsUserHave(int userID)
         {
-            var user = _userDal.Get(x => x.Id == actionTypeDto.CreatedBy);
+            var user = _userDal.Get(x => x.Id == userID);
 
             if (user == null) return false;
             else return true;

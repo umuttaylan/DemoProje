@@ -56,6 +56,8 @@ namespace DemoProje.WebAPI
 
             #region Services
             services.AddTransient<IActionTypeService, ActionTypeManager>();
+            services.AddTransient<IMaintenanceService, MaintenanceManager>();
+            services.AddTransient<IMaintenanceHistoryService, MaintenanceHistoryManager>();
             //services.AddTransient<ITokenSerivce, TokenManager>();
             #endregion
 
