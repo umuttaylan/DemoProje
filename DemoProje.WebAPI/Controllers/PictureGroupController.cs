@@ -11,19 +11,19 @@ namespace DemoProje.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MaintenanceHistoryController : ControllerBase
+    public class PictureGroupController : ControllerBase
     {
-        private readonly IMaintenanceHistoryService _maintenanceHistoryService;
-        public MaintenanceHistoryController(IMaintenanceHistoryService maintenanceHistoryService)
+        private readonly IPictureGroupService _pictureGroupService;
+        public PictureGroupController(IPictureGroupService pictureGroupService)
         {
-            _maintenanceHistoryService = maintenanceHistoryService;
+            _pictureGroupService = pictureGroupService;
         }
 
         [HttpGet]
         public IActionResult Get(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceHistoryService.Get(id);
+            response = _pictureGroupService.Get(id);
 
             if (!response.IsSuccess)
             {
@@ -38,10 +38,10 @@ namespace DemoProje.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(MaintenanceHistoryDto maintenanceHistoryDto)
+        public IActionResult Add(PictureGroupDto pictureGroupDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceHistoryService.Add(maintenanceHistoryDto);
+            response = _pictureGroupService.Add(pictureGroupDto);
 
             if (!response.IsSuccess)
             {
@@ -52,10 +52,10 @@ namespace DemoProje.WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(MaintenanceHistoryDto maintenanceHistoryDto)
+        public IActionResult Edit(PictureGroupDto pictureGroupDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceHistoryService.Update(maintenanceHistoryDto);
+            response = _pictureGroupService.Update(pictureGroupDto);
 
             if (!response.IsSuccess)
             {
@@ -69,7 +69,7 @@ namespace DemoProje.WebAPI.Controllers
         public IActionResult Delete(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceHistoryService.Delete(id);
+            response = _pictureGroupService.Delete(id);
 
             if (!response.IsSuccess)
             {

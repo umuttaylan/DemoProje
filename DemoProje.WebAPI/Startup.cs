@@ -58,6 +58,11 @@ namespace DemoProje.WebAPI
             services.AddTransient<IActionTypeService, ActionTypeManager>();
             services.AddTransient<IMaintenanceService, MaintenanceManager>();
             services.AddTransient<IMaintenanceHistoryService, MaintenanceHistoryManager>();
+            services.AddTransient<IPictureGroupService, PictureGroupManager>();
+            services.AddTransient<IStatusService, StatusManager>();
+            services.AddTransient<IUserService, UserManager>();
+            services.AddTransient<IVehicleService, VehicleManager>();
+            services.AddTransient<IVehicleTypeService, VehicleTypeManager>();
             //services.AddTransient<ITokenSerivce, TokenManager>();
             #endregion
 
