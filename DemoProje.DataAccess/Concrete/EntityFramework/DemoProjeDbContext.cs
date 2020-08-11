@@ -1,5 +1,9 @@
 ﻿using DemoProje.Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Configuration;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace DemoProje.DataAccess.Concrete.EntityFramework
 {
@@ -22,7 +26,22 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Vehicle> Vehicle { get; set; }
         public virtual DbSet<VehicleType> VehicleType { get; set; }
-        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("Connection"));
+        }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    var conn = ConfigurationManager.ConnectionStrings.;
+        //    optionsBuilder.UseNpgsql(conn);
+        //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ActionType>(entity =>

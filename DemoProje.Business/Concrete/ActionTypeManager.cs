@@ -50,6 +50,8 @@ namespace DemoProje.Business.Concrete
                 response.Data = actionType;
             }
 
+            response.Data = "Id : "+ actionType.Id;
+
             return response;
         }
 
@@ -87,7 +89,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var actionType = _actionTypeDal.Get(p => p.Id == id);
+            var actionType = _actionTypeDal.GetActionType(p => p.Id == id);
 
             if (actionType == null)
             {
@@ -98,6 +100,7 @@ namespace DemoProje.Business.Concrete
 
             var actionTypeDto = new ActionTypeDto()
             {
+                Id = actionType.Id,
                 Name = actionType.Name,
                 CreateDate = actionType.CreateDate,
                 CreatedBy = actionType.CreatedBy,
@@ -164,7 +167,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsUserHave(int userID)
         {
-            var user = _userDal.Get(x => x.Id == userID);
+            var user = _userDal.GetUser(x => x.Id == userID);
 
             if (user == null) return false;
             else return true;

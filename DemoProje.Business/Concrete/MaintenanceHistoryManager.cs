@@ -73,7 +73,7 @@ namespace DemoProje.Business.Concrete
             {
                 MaintenanceId = maintenanceHistoryDto.MaintenanceId,
                 ActionTypeId = maintenanceHistoryDto.ActionTypeId,
-                CreateDate = maintenanceHistoryDto.CreateDate,
+                CreateDate = DateTime.Now,
                 CreatedBy = maintenanceHistoryDto.CreatedBy,
                 ModifyDate = maintenanceHistoryDto.ModifyDate,
                 ModifiedBy = maintenanceHistoryDto.ModifiedBy,
@@ -91,6 +91,8 @@ namespace DemoProje.Business.Concrete
                 return response;
             }
 
+            response.Data = "Id : " + maintenanceHistory.Id;
+
             return response;
         }
 
@@ -98,7 +100,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var maintenanceHistory = _maintenanceHistoryDal.Get(p => p.Id == id);
+            var maintenanceHistory = _maintenanceHistoryDal.GetMaintenanceHistory(p => p.Id == id);
 
             if (maintenanceHistory == null)
             {
@@ -128,7 +130,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var maintenanceHistory = _maintenanceHistoryDal.Get(p => p.Id == id);
+            var maintenanceHistory = _maintenanceHistoryDal.GetMaintenanceHistory(p => p.Id == id);
 
             if (maintenanceHistory == null)
             {
@@ -139,6 +141,7 @@ namespace DemoProje.Business.Concrete
 
             var maintenanceHistoryDto = new MaintenanceHistoryDto()
             {
+                Id = maintenanceHistory.Id,
                 MaintenanceId = maintenanceHistory.MaintenanceId,
                 ActionTypeId = maintenanceHistory.ActionTypeId,
                 CreateDate = maintenanceHistory.CreateDate,
@@ -228,7 +231,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsUserHave(int userID)
         {
-            var user = _userDal.Get(x => x.Id == userID);
+            var user = _userDal.GetUser(x => x.Id == userID);
 
             if (user == null) return false;
             else return true;
@@ -236,7 +239,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsMaintenanceHave(int maintenanceId)
         {
-            var maintenance = _maintenanceDal.Get(x => x.Id == maintenanceId);
+            var maintenance = _maintenanceDal.GetMaintenance(x => x.Id == maintenanceId);
 
             if (maintenance == null) return false;
             else return true;
@@ -244,7 +247,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsActionTypeHave(int actionTypeId)
         {
-            var actionType = _actionTypeDal.Get(x => x.Id == actionTypeId);
+            var actionType = _actionTypeDal.GetActionType(x => x.Id == actionTypeId);
 
             if (actionType == null) return false;
             else return true;

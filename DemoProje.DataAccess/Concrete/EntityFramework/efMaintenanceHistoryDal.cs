@@ -5,6 +5,8 @@ using DemoProje.Core.DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace DemoProje.DataAccess.Concrete.EntityFramework
 {
@@ -13,6 +15,19 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
         public efMaintenanceHistoryDal(DbContext dbContext): base(dbContext)
         {
 
+        }
+
+        public MaintenanceHistory GetMaintenanceHistory(Expression<Func<MaintenanceHistory, bool>> condition)
+        {
+            var result = new MaintenanceHistory();
+            using (var context = new DemoProjeDbContext())
+            {
+                result = context.MaintenanceHistory
+                              .Where(p => p.IsDeleted == false)
+                              .FirstOrDefault(condition);
+            }
+
+            return result;
         }
     }
 }

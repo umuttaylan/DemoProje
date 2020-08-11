@@ -52,7 +52,7 @@ namespace DemoProje.Business.Concrete
                 Name = statusDto.Name,
                 CreateDate = DateTime.Now,
                 CreatedBy = statusDto.CreatedBy,
-                ModifyDate = DateTime.Now,
+                ModifyDate = statusDto.ModifyDate,
                 ModifiedBy = statusDto.ModifiedBy
             };
 
@@ -66,6 +66,8 @@ namespace DemoProje.Business.Concrete
                 return response;
             }
 
+            response.Data = "Id : " + status.Id;
+
             return response;
         }
 
@@ -73,7 +75,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var status = _statusDal.Get(p => p.Id == id);
+            var status = _statusDal.GetStatus(p => p.Id == id);
 
             if (status == null)
             {
@@ -103,7 +105,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var status = _statusDal.Get(p => p.Id == id);
+            var status = _statusDal.GetStatus(p => p.Id == id);
 
             if (status == null)
             {
@@ -114,6 +116,7 @@ namespace DemoProje.Business.Concrete
 
             var statusDto = new StatusDto()
             {
+                Id = status.Id,
                 Name = status.Name,
                 CreateDate = status.CreateDate,
                 CreatedBy = status.CreatedBy,
@@ -181,7 +184,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsUserHave(int userID)
         {
-            var user = _userDal.Get(x => x.Id == userID);
+            var user = _userDal.GetUser(x => x.Id == userID);
 
             if (user == null) return false;
             else return true;

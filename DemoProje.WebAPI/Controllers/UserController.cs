@@ -11,19 +11,19 @@ namespace DemoProje.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MaintenanceController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IMaintenanceService _maintenanceService;
-        public MaintenanceController(IMaintenanceService maintenanceService)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            _maintenanceService = maintenanceService;
+            _userService = userService;
         }
 
         [HttpGet]
         public IActionResult Get(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Get(id);
+            response = _userService.Get(id);
 
             if (!response.IsSuccess)
             {
@@ -37,39 +37,11 @@ namespace DemoProje.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("BreakdownNotifications")]
-        public IActionResult GetBreakdownNotifications()
-        {
-            var response = new ResponseViewModel();
-            response = _maintenanceService.GetAllBreakdownNotifications();
-
-            if (!response.IsSuccess)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpGet("BreakdownNotificationDetail")]
-        public IActionResult GetBreakdownNotificationDetail(int id)
-        {
-            var response = new ResponseViewModel();
-            response = _maintenanceService.GetBreakdownNotificationDetail(id);
-
-            if (!response.IsSuccess)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
         [HttpPost]
-        public IActionResult Add(MaintenanceDto maintenanceDto)
+        public IActionResult Add(UserDto userDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Add(maintenanceDto);
+            response = _userService.Add(userDto);
 
             if (!response.IsSuccess)
             {
@@ -80,10 +52,10 @@ namespace DemoProje.WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(MaintenanceDto maintenanceDto)
+        public IActionResult Edit(UserDto userDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Update(maintenanceDto);
+            response = _userService.Update(userDto);
 
             if (!response.IsSuccess)
             {
@@ -97,7 +69,7 @@ namespace DemoProje.WebAPI.Controllers
         public IActionResult Delete(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Delete(id);
+            response = _userService.Delete(id);
 
             if (!response.IsSuccess)
             {

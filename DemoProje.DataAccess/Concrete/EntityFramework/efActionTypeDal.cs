@@ -5,6 +5,8 @@ using DemoProje.Core.DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace DemoProje.DataAccess.Concrete.EntityFramework
 {
@@ -12,7 +14,19 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
     {
         public efActionTypeDal(DbContext dbContext) : base(dbContext)
         {
+        }
 
+        public ActionType GetActionType(Expression<Func<ActionType, bool>> condition)
+        {
+            var result = new ActionType();
+            using (var context = new DemoProjeDbContext())
+            {
+                result = context.ActionType
+                              .Where(p => p.IsDeleted == false)
+                              .FirstOrDefault(condition);
+            }
+
+            return result;
         }
     }
 }

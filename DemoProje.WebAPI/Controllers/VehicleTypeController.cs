@@ -9,21 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProje.WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class MaintenanceController : ControllerBase
+    public class VehicleTypeController : ControllerBase
     {
-        private readonly IMaintenanceService _maintenanceService;
-        public MaintenanceController(IMaintenanceService maintenanceService)
+        private readonly IVehicleTypeService _vehicleTypeService;
+        public VehicleTypeController(IVehicleTypeService vehicleTypeService)
         {
-            _maintenanceService = maintenanceService;
+            _vehicleTypeService = vehicleTypeService;
         }
 
         [HttpGet]
         public IActionResult Get(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Get(id);
+            response = _vehicleTypeService.Get(id);
 
             if (!response.IsSuccess)
             {
@@ -37,39 +37,11 @@ namespace DemoProje.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("BreakdownNotifications")]
-        public IActionResult GetBreakdownNotifications()
-        {
-            var response = new ResponseViewModel();
-            response = _maintenanceService.GetAllBreakdownNotifications();
-
-            if (!response.IsSuccess)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpGet("BreakdownNotificationDetail")]
-        public IActionResult GetBreakdownNotificationDetail(int id)
-        {
-            var response = new ResponseViewModel();
-            response = _maintenanceService.GetBreakdownNotificationDetail(id);
-
-            if (!response.IsSuccess)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
         [HttpPost]
-        public IActionResult Add(MaintenanceDto maintenanceDto)
+        public IActionResult Add(VehicleTypeDto vehicleTypeDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Add(maintenanceDto);
+            response = _vehicleTypeService.Add(vehicleTypeDto);
 
             if (!response.IsSuccess)
             {
@@ -80,10 +52,10 @@ namespace DemoProje.WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(MaintenanceDto maintenanceDto)
+        public IActionResult Edit(VehicleTypeDto vehicleTypeDto)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Update(maintenanceDto);
+            response = _vehicleTypeService.Update(vehicleTypeDto);
 
             if (!response.IsSuccess)
             {
@@ -97,7 +69,7 @@ namespace DemoProje.WebAPI.Controllers
         public IActionResult Delete(int id)
         {
             var response = new ResponseViewModel();
-            response = _maintenanceService.Delete(id);
+            response = _vehicleTypeService.Delete(id);
 
             if (!response.IsSuccess)
             {

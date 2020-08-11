@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using DemoProje.Business.Abstract;
 using DemoProje.Business.Concrete;
@@ -6,9 +7,11 @@ using DemoProje.Core.DataAccess;
 using DemoProje.Core.DataAccess.EntityFramework;
 using DemoProje.DataAccess.Abstract;
 using DemoProje.DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +42,7 @@ namespace DemoProje.WebAPI
 
             #region DbContext
             services.AddTransient<DbContext, DemoProjeDbContext>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<DemoProjeDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Connection")));
             services.AddScoped(typeof(IEntityRepository<>), typeof(efRepositoryBase<>));
             #endregion
@@ -63,36 +67,17 @@ namespace DemoProje.WebAPI
             services.AddTransient<IUserService, UserManager>();
             services.AddTransient<IVehicleService, VehicleManager>();
             services.AddTransient<IVehicleTypeService, VehicleTypeManager>();
-            //services.AddTransient<ITokenSerivce, TokenManager>();
-            #endregion
-
-            #region JWT
-            var appSettingSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingSection);
-
-            var appSettings = appSettingSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
-            services.AddAuthentication(x => {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x => {
-                x.RequireHttpsMetadata = false; 
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key), 
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
             #endregion
 
             services.AddCors();
             services.AddControllers();
+
+            #region Auth
+
+            services.AddAuthentication("BasicAuthentication")
+               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

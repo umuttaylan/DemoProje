@@ -49,6 +49,8 @@ namespace DemoProje.Business.Concrete
                 response.Data = pictureGroup;
             }
 
+            response.Data = "Id : " + pictureGroup.Id;
+
             return response;
         }
 
@@ -56,7 +58,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var pictureGroup = _pictureGroupDal.Get(p => p.Id == id);
+            var pictureGroup = _pictureGroupDal.GetPictureGroup(p => p.Id == id);
 
             if (pictureGroup == null)
             {
@@ -86,7 +88,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var pictureGroup = _pictureGroupDal.Get(p => p.Id == id);
+            var pictureGroup = _pictureGroupDal.GetPictureGroup(p => p.Id == id);
 
             if (pictureGroup == null)
             {
@@ -97,6 +99,7 @@ namespace DemoProje.Business.Concrete
 
             var pictureGroupDto = new PictureGroupDto()
             {
+                Id = pictureGroup.Id,
                 PictureImage = pictureGroup.PictureImage,
                 CreateDate = pictureGroup.CreateDate,
                 CreatedBy = pictureGroup.CreatedBy,
@@ -162,7 +165,7 @@ namespace DemoProje.Business.Concrete
 
         private bool IsUserHave(int userID)
         {
-            var user = _userDal.Get(x => x.Id == userID);
+            var user = _userDal.GetUser(x => x.Id == userID);
 
             if (user == null) return false;
             else return true;
