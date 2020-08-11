@@ -23,7 +23,7 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
             using (var context = new DemoProjeDbContext())
             {
                 result = context.PictureGroup
-                              .Where(p => p.IsDeleted == false)
+                              .Where(p => p.IsDeleted != true)
                               .FirstOrDefault(condition);
             }
 

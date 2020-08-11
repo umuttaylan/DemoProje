@@ -21,7 +21,7 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
             using (var context = new DemoProjeDbContext())
             {
                 result = context.Vehicle
-                              .Where(p => p.IsDeleted == false)
+                              .Where(p => p.IsDeleted != true)
                               .FirstOrDefault(condition);
             }
 

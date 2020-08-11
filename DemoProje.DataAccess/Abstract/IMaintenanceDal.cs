@@ -10,5 +10,6 @@ namespace DemoProje.DataAccess.Abstract
     public interface IMaintenanceDal : IEntityRepository<Maintenance>
     {
         Maintenance GetMaintenance(Expression<Func<Maintenance, bool>> condition);
+        List<Maintenance> GetMaintenanceList(Expression<Func<Maintenance, bool>> condition = null);
     }
 }

@@ -1,22 +1,17 @@
-using System;
-using System.Text;
 using DemoProje.Business.Abstract;
 using DemoProje.Business.Concrete;
-using DemoProje.Business.CustomExtensions;
+using DemoProje.Business.Concrete.Helpers;
 using DemoProje.Core.DataAccess;
 using DemoProje.Core.DataAccess.EntityFramework;
 using DemoProje.DataAccess.Abstract;
 using DemoProje.DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace DemoProje.WebAPI
@@ -42,7 +37,6 @@ namespace DemoProje.WebAPI
 
             #region DbContext
             services.AddTransient<DbContext, DemoProjeDbContext>();
-            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<DemoProjeDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Connection")));
             services.AddScoped(typeof(IEntityRepository<>), typeof(efRepositoryBase<>));
             #endregion
@@ -67,6 +61,7 @@ namespace DemoProje.WebAPI
             services.AddTransient<IUserService, UserManager>();
             services.AddTransient<IVehicleService, VehicleManager>();
             services.AddTransient<IVehicleTypeService, VehicleTypeManager>();
+            services.AddTransient<IAuthService, AuthManager>();
             #endregion
 
             services.AddCors();
@@ -75,7 +70,7 @@ namespace DemoProje.WebAPI
             #region Auth
 
             services.AddAuthentication("BasicAuthentication")
-               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
             #endregion
         }

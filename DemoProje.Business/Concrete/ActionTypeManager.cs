@@ -59,7 +59,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var actionType = _actionTypeDal.Get(p => p.Id == id);
+            var actionType = _actionTypeDal.GetActionType(p => p.Id == id);
 
             if (actionType == null)
             {

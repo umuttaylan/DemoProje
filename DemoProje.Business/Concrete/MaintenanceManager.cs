@@ -139,7 +139,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
 
-            var maintenance = _maintenanceDal.Get(p => p.Id == id);
+            var maintenance = _maintenanceDal.GetMaintenance(p => p.Id == id);
 
             if (maintenance == null)
             {
@@ -169,7 +169,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
             List<BreakdownNotificationDto> breakdownNotificationDtos = new List<BreakdownNotificationDto>();
-            var maintenances = _maintenanceDal.GetList();
+            var maintenances = _maintenanceDal.GetMaintenanceList(p=>p.IsDeleted == false);
 
             foreach (var maintenance in maintenances)
             {
@@ -196,7 +196,7 @@ namespace DemoProje.Business.Concrete
         {
             var response = new ResponseViewModel();
             var breakdownNotificationDetail = new BreakdownNotificationDetailDto();
-            var maintenance = _maintenanceDal.Get(p => p.Id == id);
+            var maintenance = _maintenanceDal.GetMaintenance(p => p.Id == id);
 
             var user = GetUser(maintenance.UserId);
 
@@ -410,10 +410,14 @@ namespace DemoProje.Business.Concrete
 
         private string GetVehicleTypeName(int vehicleId)
         {
-            var vehicleTypeId = _vehicleDal.GetVehicle(p => p.Id == vehicleId).VehicleTypeId;
-            var vehicleType = _vehicleTypeDal.GetVehicleType(p => p.Id == vehicleTypeId);
+            var vehicle = _vehicleDal.GetVehicle(p => p.Id == vehicleId);
+            if (vehicle != null)
+            {
+                var vehicleType = _vehicleTypeDal.GetVehicleType(p => p.Id == vehicle.VehicleTypeId);
+                return vehicleType.Name;
+            }
+            else return null;
 
-            return vehicleType.Name;
         }
 
         private string GetMaintenanceDescription(int maintenanceID)

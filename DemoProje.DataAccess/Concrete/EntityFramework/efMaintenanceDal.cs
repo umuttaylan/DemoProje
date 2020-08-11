@@ -29,5 +29,17 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
 
             return result;
         }
+
+        public List<Maintenance> GetMaintenanceList(Expression<Func<Maintenance, bool>> condition = null)
+        {
+            using (var _context = new DemoProjeDbContext())
+            {
+                var list = condition == null ?
+                _context.Set<Maintenance>().ToList() :
+                _context.Set<Maintenance>().Where(condition).ToList();
+
+                return list;
+            }
+        }
     }
 }

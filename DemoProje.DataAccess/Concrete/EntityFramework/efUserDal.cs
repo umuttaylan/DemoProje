@@ -22,7 +22,7 @@ namespace DemoProje.DataAccess.Concrete.EntityFramework
             using (var context = new DemoProjeDbContext())
             {
                 return context.User
-                              .Where(p => p.IsDeleted == false)
+                              .Where(p => p.IsDeleted != true)
                               .FirstOrDefault(condition);
             }
         }

@@ -1,9 +1,11 @@
 ﻿using DemoProje.Business.Abstract;
 using DemoProje.Entities.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProje.WebAPI.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class StatusController : ControllerBase
